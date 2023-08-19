@@ -2,56 +2,56 @@
 #include <cstring>
 #include <fstream>
 
-String::String(const char* str) {
-    data = new char[strlen(str) + 1];
-    strcpy(data, str);
+String::String(const char* cadena) {
+    this->cadena = new char[strlen(cadena) + 1];
+    strcpy(this->cadena, cadena);
 }
 
 String::~String() {
-    delete[] data;
+    delete[] cadena;
 }
 
 char String::caracterEn(int index) const {
     if (index >= 0 && index < len()) {
-        return data[index];
+        return cadena[index];
     }
     return '\0';
 }
 
-int String::contarCaracter(char c) const {
+int String::contarCaracter(char caracter) const {
     int count = 0;
     for (int i = 0; i < len(); ++i) {
-        if (data[i] == c) {
+        if (cadena[i] == caracter) {
             count++;
         }
     }
     return count;
 }
 
-int String::ultimoIndice(char c) const {
+int String::ultimoIndice(char caracter) const {
     for (int i = len() - 1; i >= 0; --i) {
-        if (data[i] == c) {
+        if (cadena[i] == caracter) {
             return i;
         }
     }
     return -1;
 }
 
-void String::cambiarCadena(const char* str) {
-    delete[] data;
-    data = new char[strlen(str) + 1];
-    strcpy(data, str);
+void String::cambiarCadena(const char* nuevaCadena) {
+    delete[] cadena;
+    this->cadena = new char[strlen(nuevaCadena) + 1];
+    strcpy(this->cadena, nuevaCadena);
 }
 
 int String::len() const {
-    return strlen(data);
+    return strlen(cadena);
 }
 
 bool String::operator==(const String& other) const {
-    return strcmp(data, other.data) == 0;
+    return strcmp(cadena, other.cadena) == 0;
 }
 
-String** String::split(char delimiter) const {
+String** String::split(char caracter) const {
     // Implementar lógica para dividir el string en partes usando el delimitador
     return nullptr;
 }
@@ -64,22 +64,22 @@ void String::concatenar(const char* str) {
     // Implementar lógica para concatenar al final del string
 }
 
-void String::concatenarCadenas(const char** strs, int count) {
+void String::concatenarCadenas(const char** cadena, int count) {
     // Implementar lógica para concatenar un arreglo de cadenas al final del string
 }
 
-void String::reemplazarEn(const char* str, int index) {
+void String::reemplazarEn(const char* cadena, int index) {
     // Implementar lógica para reemplazar en el índice especificado
 }
 
-void String::reemplazarOcurrencias(const char* oldStr, const char* newStr) {
-    // Implementar lógica para reemplazar todas las ocurrencias de oldStr con newStr
+void String::reemplazarOcurrencias(const char* cadenaAnterior, const char* nuevaCadena) {
+    // Implementar lógica para reemplazar todas las ocurrencias de cadenaAnterior con nuevaCadena
 }
 
 void String::guardarEnArchivo(const char* path, const char* mode) const {
     std::ofstream file(path, mode);
     if (file.is_open()) {
-        file << data;
+        file << cadena;
         file.close();
     }
 }
