@@ -15,8 +15,8 @@ public:
 
     String** split(char pDelimitador);
     void concatenarEn(const char* pString, int pIndice);
-    void concatenar(const char* pString);
-    void concatenarCadenas(const char** strArray);
+    char* concatenar(const char* pString);
+    char* concatenarCadenas(const char** strArray);
     void reemplazarEn(const char* pReemplazo, int pIndice);
     void reemplazarOcurrencias(const char* pOcurrencia, const char* pReemplazo);
     void guardarEnArchivo(const char* path, const char* mode);
