@@ -145,6 +145,7 @@ char* String::concatenar(const char* CadenaNueva) {
     }
     CadenaResultante[nuevoLargo] = '\0';
 
+    delete[] CadenaResultante;
     return CadenaResultante;
 }
 
