@@ -116,8 +116,36 @@ void String::concatenarEn(const char* str, int index) {
     // Implementar lógica para concatenar el string en el índice especificado
 }
 
-void String::concatenar(const char* str) {
-    // Implementar lógica para concatenar al final del string
+char* String::concatenar(const char* CadenaNueva) {
+    if (CadenaNueva == nullptr) {
+        return nullptr;
+    }
+
+    int LargoOriginal = 0;
+    int LargoNueva = 0;
+
+    while (cadena[LargoOriginal] != '\0') {
+        LargoOriginal++;
+    }
+
+    while (CadenaNueva[LargoNueva] != '\0') {
+        LargoNueva++;
+    }
+
+    int nuevoLargo = LargoOriginal+LargoNueva;
+
+    char* CadenaResultante = new char[nuevoLargo + 1];
+    for (int i = 0; i < nuevoLargo; i++) {
+        if (i < LargoOriginal){
+            CadenaResultante[i] = cadena[i];
+        } 
+        else {
+            CadenaResultante[i] = CadenaNueva[i- LargoOriginal];
+        } 
+    }
+    CadenaResultante[nuevoLargo] = '\0';
+
+    return CadenaResultante;
 }
 
 void String::concatenarCadenas(const char** strs, int count) {
