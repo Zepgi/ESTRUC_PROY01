@@ -3,28 +3,28 @@
 
 class String {
 public:
-    // Constructor y Destructor
-    String(const char* str);
-    ~String();
+    String(const char* pCadena);  // Constructor
+    ~String();  // Destructor
 
-    // Métodos
-    char caracterEn(int index) const;
-    int contarCaracter(char caracter) const;
-    int ultimoIndice(char caracter) const;
-    void cambiarCadena(const char* nuevaCadena);
-    int len() const;
-    bool operator==(const String& other) const;
-    String** split(char caracter) const;
-    void concatenarEn(const char* str, int index);
-    void concatenar(const char* str);
-    void concatenarCadenas(const char** cadena, int count);
-    void reemplazarEn(const char* cadena, int index);
-    void reemplazarOcurrencias(const char* cadenaAnterior, const char* nuevaCadena);
-    void guardarEnArchivo(const char* path, const char* mode) const;
+    char caracterEn(int pIndice);
+    int contarCaracter(char pCaracter);
+    int ultimoIndice(char pCaracter);
+    void cambiarCadena(const char* pNewCadena);
+    int len();
+    bool operator==(const String pCadena);
+
+    String** split(char pDelimitador);
+    void concatenarEn(const char* pString, int pIndice);
+    void concatenar(const char* pString);
+    void concatenarCadenas(const char** strArray);
+    void reemplazarEn(const char* pReemplazo, int pIndice);
+    void reemplazarOcurrencias(const char* pOcurrencia, const char* pReemplazo);
+    void guardarEnArchivo(const char* path, const char* mode);
     void leerArchivo(const char* path);
 
 private:
-    char* cadena;
+    char* cadena;  // Actual character array
 };
 
-#endif // STRING_HPP
+#endif
+
