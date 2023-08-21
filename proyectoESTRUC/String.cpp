@@ -77,7 +77,39 @@ bool String::equals(String pNuevaCadena) {
 
 String** String::split(char delimiter) const {
     // Implementar lógica para dividir el string en partes usando el delimitador
-    return nullptr;
+    std::vector<String*> partes;
+    
+    int inicio = 0;
+    int fin = 0;
+
+    while (cadena[fin] != '\0') {
+        if (cadena[fin] == caracter) {
+            int longitud = fin - inicio; //Obtiene la longitud
+            char* subcadena = new char[longitud + 1];
+            strncpy(subcadena, cadena + inicio, longitud);
+            subcadena[longitud] = '\0';
+            partes.push_back(new String(subcadena));
+            delete[] subcadena;  // Liberar memoria de la subcadena temporal
+            inicio = fin + 1;
+        }
+        fin++;
+    }
+
+    int longitud = fin - inicio;
+    char* subcadena = new char[longitud + 1];
+    strncpy(subcadena, cadena + inicio, longitud);
+    subcadena[longitud] = '\0';
+    partes.push_back(new String(subcadena));
+    delete[] subcadena;  // Liberar memoria de la última subcadena temporal
+
+    String** arregloPartes = new String*[partes.size() + 1];
+    for (size_t i = 0; i < partes.size(); ++i) {
+        arregloPartes[i] = partes[i];
+    }
+    arregloPartes[partes.size()] = nullptr;
+
+    return arregloPartes;
+    //return nullptr;
 }
 
 void String::concatenarEn(const char* str, int index) {
