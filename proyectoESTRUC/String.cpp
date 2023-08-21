@@ -1,57 +1,81 @@
 #include "String.hpp"
-#include <cstring>
 #include <fstream>
 
-String::String(const char* cadena) {
-    this->cadena = new char[strlen(cadena) + 1];
-    strcpy(this->cadena, cadena);
+String::String(const char* pCadena) {
+    cadena = pCadena;
 }
 
 String::~String() {
-    delete[] cadena;
+    delete[] data;
 }
 
-char String::caracterEn(int index) const {
-    if (index >= 0 && index < len()) {
-        return cadena[index];
-    }
-    return '\0';
+char String::caracterEn(int pIndice) {
+    if (pIndice < 0 || pIndice >= len())
+        return '\0';  // Retorna el caracter nulo para índices inválidos
+    return cadena[pIndice];
 }
 
-int String::contarCaracter(char caracter) const {
-    int count = 0;
+int String::contarCaracter(char pCaracter) const {
+    int contador = 0;
     for (int i = 0; i < len(); ++i) {
-        if (cadena[i] == caracter) {
-            count++;
+        if (cadena[i] == pCaracter) {
+            contador++;
         }
     }
-    return count;
+    return contador;
 }
 
-int String::ultimoIndice(char caracter) const {
+int String::ultimoIndice(char pCaracter) const {
     for (int i = len() - 1; i >= 0; --i) {
-        if (cadena[i] == caracter) {
+        if (cadena[i] == pCaracter) {
             return i;
         }
     }
     return -1;
 }
 
-void String::cambiarCadena(const char* nuevaCadena) {
+void String::cambiarCadena(const char* pNuevaCadena) {
+    if (pNuevaCadena == nullptr)
+        return;
+
+    int nuevoLargo = 0;
+    while (pNuevaCadena[nuevoLargo] != '\0')
+        nuevoLargo++;
+
+    char* nuevaCadena = new char[nuevoLargo + 1];  // +1 para el carácter nulo
+    for (int i = 0; i < nuevoLargo; i++)
+        nuevaCadena[i] = pNuevaCadena[i];
+    nuevaCadena[nuevoLargo] = '\0';
+
     delete[] cadena;
-    this->cadena = new char[strlen(nuevaCadena) + 1];
-    strcpy(this->cadena, nuevaCadena);
+    cadena = nuevaCadena;
 }
 
-int String::len() const {
-    return strlen(cadena);
+int String::len() {
+    int largo = 0;
+    while (cadena[largo] != '\0')
+        largo++;
+    return largo;
 }
 
-bool String::operator==(const String& other) const {
-    return strcmp(cadena, other.cadena) == 0;
+bool String::equals(String pNuevaCadena) {
+
+    int newCadenaLargo = 0;
+    while (pNuevaCadena[newCadenaLargo] != '\0')
+        newCadenaLargo++;
+
+    if (len() != newCadenaLargo)
+        return false;
+
+    for (int i = 0; i < len(); i++) {
+        if (cadena[i] != pNewCadena[i])
+            return false;
+    }
+    
+    return true;
 }
 
-String** String::split(char caracter) const {
+String** String::split(char delimiter) const {
     // Implementar lógica para dividir el string en partes usando el delimitador
     return nullptr;
 }
@@ -64,19 +88,17 @@ void String::concatenar(const char* str) {
     // Implementar lógica para concatenar al final del string
 }
 
-void String::concatenarCadenas(const char** cadena, int count) {
+void String::concatenarCadenas(const char** strs, int count) {
     // Implementar lógica para concatenar un arreglo de cadenas al final del string
 }
 
-void String::reemplazarEn(const char* cadena, int index) {
-    // Implementar lógica para reemplazar en el índice especificado
+void String::reemplazarEn(const char* pReemplazo, int pIndice) {
 }
 
-void String::reemplazarOcurrencias(const char* cadenaAnterior, const char* nuevaCadena) {
-    // Implementar lógica para reemplazar todas las ocurrencias de cadenaAnterior con nuevaCadena
+void String::reemplazarOcurrencias(const char* pOcurrencia, const char* pNewTexto) {
 }
 
-void String::guardarEnArchivo(const char* path, const char* mode) const {
+void String::guardarEnArchivo(const char* path, const char* mode) {
     std::ofstream file(path, mode);
     if (file.is_open()) {
         file << cadena;
