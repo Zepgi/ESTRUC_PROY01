@@ -139,6 +139,11 @@ void String::cambiarCadena(const char* pNuevaCadena) {
     cadena = nuevaCadena;
 }
 
+const char* String::obtenerCadena() const {
+    return cadena;
+}
+
+
 /*****Nombre***************************************
  * len
  * 
