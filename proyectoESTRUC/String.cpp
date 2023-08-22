@@ -149,9 +149,14 @@ char* String::concatenar(const char* CadenaNueva) {
     return CadenaResultante;
 }
 
-char* concatenarCadenas(const char* cadena, char* CadenaNueva[], int CantidadCadenas) {
+char* String::concatenarCadenas(const char* CadenaNueva[]) {
     int LargoCadena = 0;
     int LargoOriginal= 0;
+    int CantidadCadenas = 0;
+
+    while (cadena[CantidadCadenas] != '\0') {
+        CantidadCadenas++;
+    }
 
 
     while (cadena[LargoOriginal] != '\0') {
