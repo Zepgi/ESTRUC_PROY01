@@ -1,12 +1,14 @@
 #include "String.hpp"
+#include <stdio.h>
 #include <fstream>
+#include <iostream>
 
-String::String(const char* pCadena) {
+String::String(char* pCadena) {
     cadena = pCadena;
 }
 
 String::~String() {
-    delete[] data;
+    delete[] cadena;
 }
 
 char String::caracterEn(int pIndice) {
@@ -15,7 +17,7 @@ char String::caracterEn(int pIndice) {
     return cadena[pIndice];
 }
 
-int String::contarCaracter(char pCaracter) const {
+int String::contarCaracter(char pCaracter) {
     int contador = 0;
     for (int i = 0; i < len(); ++i) {
         if (cadena[i] == pCaracter) {
@@ -25,7 +27,7 @@ int String::contarCaracter(char pCaracter) const {
     return contador;
 }
 
-int String::ultimoIndice(char pCaracter) const {
+int String::ultimoIndice(char pCaracter) {
     for (int i = len() - 1; i >= 0; --i) {
         if (cadena[i] == pCaracter) {
             return i;
@@ -58,17 +60,17 @@ int String::len() {
     return largo;
 }
 
-bool String::equals(String pNuevaCadena) {
+bool String::equals(const char* pCadena) {
 
-    int newCadenaLargo = 0;
-    while (pNuevaCadena[newCadenaLargo] != '\0')
-        newCadenaLargo++;
+    int cadenaLargo = 0;
+    while (pCadena[cadenaLargo] != '\0')
+        cadenaLargo++;
 
-    if (len() != newCadenaLargo)
+    if (len() != cadenaLargo)
         return false;
 
     for (int i = 0; i < len(); i++) {
-        if (cadena[i] != pNewCadena[i])
+        if (cadena[i] != pCadena[i])
             return false;
     }
     
@@ -205,25 +207,129 @@ char* String::concatenarCadenas(const char* CadenaNueva[]) {
 }
 
 void String::reemplazarEn(const char* pReemplazo, int pIndice) {
+    if (pReemplazo == nullptr || pIndice < 0)
+        return;
+
+    int reemplazoLen = 0;
+    while (pReemplazo[reemplazoLen] != '\0')
+        reemplazoLen++;
+
+    int newLen = len() + reemplazoLen - 1;
+
+    char* newCadena = new char[newLen + 1];  // +1 para el carácter nulo
+
+    int i = 0;  // Índice para newCadena
+    int j = 0;  // Índice para cadena
+    while (j < len()) {
+        if (i == pIndice) {
+            for (int k = 0; k < reemplazoLen; k++)
+                newCadena[i++] = pReemplazo[k];
+            j++;
+        } else {
+            newCadena[i++] = cadena[j++];
+        }
+    }
+
+    delete[] cadena;
+    cadena = newCadena;
 }
 
 void String::reemplazarOcurrencias(const char* pOcurrencia, const char* pNewTexto) {
+    if (pOcurrencia == nullptr || pNewTexto == nullptr)
+        return;
+
+    int ocurrenciaLen = 0;
+    while (pOcurrencia[ocurrenciaLen] != '\0')
+        ocurrenciaLen++;
+
+    int newTextoLen = 0;
+    while (pNewTexto[newTextoLen] != '\0')
+        newTextoLen++;
+
+    int newCadenaLen = len();
+
+    // Calcular la cantidad de veces que ocurre pOcurrencia en cadena
+    int contador = 0;
+    for (int i = 0; i < len(); i++) {
+        bool coincide = true;
+        for (int j = 0; j < ocurrenciaLen; j++) {
+            if (cadena[i + j] != pOcurrencia[j]) {
+                coincide = false;
+                break;
+            }
+        }
+        if (coincide) {
+            contador++;
+            i += ocurrenciaLen - 1;
+        }
+    }
+
+    newCadenaLen += (newTextoLen - ocurrenciaLen) * contador;
+
+    char* newCadena = new char[newCadenaLen + 1];  // +1 para el carácter nulo
+
+    int i = 0;  // Índice para newCadena
+    int j = 0;  // Índice para cadena
+    while (j < len()) {
+        bool coincide = true;
+        for (int k = 0; k < ocurrenciaLen; k++) {
+            if (cadena[j + k] != pOcurrencia[k]) {
+                coincide = false;
+                break;
+            }
+        }
+        if (coincide) {
+            for (int k = 0; k < newTextoLen; k++)
+                newCadena[i++] = pNewTexto[k];
+            j += ocurrenciaLen;
+        } else {
+            newCadena[i++] = cadena[j++];
+        }
+    }
+
+    delete[] cadena;
+    cadena = newCadena;
 }
 
+
 void String::guardarEnArchivo(const char* path, const char* mode) {
-    std::ofstream file(path, mode);
-    if (file.is_open()) {
-        file << cadena;
-        file.close();
-    }
 }
 
 void String::leerArchivo(const char* path) {
-    std::ifstream file(path);
-    if (file.is_open()) {
-        std::string content((std::istreambuf_iterator<char>(file)),
-                            std::istreambuf_iterator<char>());
-        cambiarCadena(content.c_str());
-        file.close();
+}
+
+int main() {
+    String miString("Hola, soy un String.");
+
+    // Ejemplo de uso de las funciones
+    miString.cambiarCadena("Hola, ahora soy un String diferente!");
+    
+    char caracter = miString.caracterEn(0);
+    std::cout << "Caracter en la posición 0: " << caracter << std::endl;
+
+    int contador = miString.contarCaracter('a');
+    std::cout << "Cantidad de 'a' en el String: " << contador << std::endl;
+
+    int ultimoInd = miString.ultimoIndice('o');
+    std::cout << "Última posición de 'o': " << ultimoInd << std::endl;
+
+    int longitud = miString.len();
+    std::cout << "Longitud del String: " << longitud << std::endl;
+
+    if (miString.equals("Hola, ahora soy un String diferente!")) {
+      std::cout << "Son iguales." << std::endl;
+    } else {
+      std::cout << "Son diferentes." << std::endl;
     }
+
+    miString.reemplazarOcurrencias("soy", "era");
+
+    miString.reemplazarEn(", mírame", 35);
+
+    miString.concatenar("SIIIIII");
+    
+    // Imprimir el resultado final
+    std::cout << "Resultado final: " << miString.cadena << std::endl;
+
+    return 0;
 }
