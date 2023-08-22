@@ -3,19 +3,76 @@
 #include <fstream>
 #include <iostream>
 
+/*****Nombre***************************************
+ * String
+ * 
+ *****Descripción**********************************
+ * Constructor de la clase String que inicializa la instancia con el puntero a una cadena de caracteres existente.
+ * 
+ *****Retorno**************************************
+ * Este constructor no retorna nada.
+ * 
+ *****Entradas*************************************
+ * pCadena: Puntero a una cadena de caracteres que se utilizará como contenido inicial de la instancia String.
+ * 
+ **************************************************/
+
 String::String(char* pCadena) {
     cadena = pCadena;
 }
 
+/*****Nombre***************************************
+ * ~String
+ * 
+ *****Descripción**********************************
+ * Destructor de la clase String.
+ * 
+ *****Retorno**************************************
+ * Este destructor no retorna nada.
+ * 
+ *****Entradas*************************************
+ * No requiere ninguna entrada.
+ * 
+ **************************************************/
+
 String::~String() {
     delete[] cadena;
 }
+
+/*****Nombre***************************************
+ * caracterEn
+ * 
+ *****Descripción**********************************
+ * Devuelve el carácter en el índice especificado de la cadena actual.
+ * 
+ *****Retorno**************************************
+ * Retorna el carácter en el índice dado. Si el índice es inválido (negativo o mayor/equivalente
+ * al tamaño de la cadena), se devuelve el carácter nulo.
+ * 
+ *****Entradas*************************************
+ * pIndice: El índice del carácter que se desea obtener de la cadena.
+ * 
+ **************************************************/
 
 char String::caracterEn(int pIndice) {
     if (pIndice < 0 || pIndice >= len())
         return '\0';  // Retorna el caracter nulo para índices inválidos
     return cadena[pIndice];
 }
+
+/*****Nombre***************************************
+ * contarCaracter
+ * 
+ *****Descripción**********************************
+ * Cuenta y devuelve la cantidad de veces que aparece un carácter en la cadena actual.
+ * 
+ *****Retorno**************************************
+ * Retorna el número de ocurrencias del carácter especificado en la cadena.
+ * 
+ *****Entradas*************************************
+ * pCaracter: El carácter que se desea contar en la cadena.
+ * 
+ **************************************************/
 
 int String::contarCaracter(char pCaracter) {
     int contador = 0;
@@ -27,6 +84,21 @@ int String::contarCaracter(char pCaracter) {
     return contador;
 }
 
+/*****Nombre***************************************
+ * ultimoIndice
+ * 
+ *****Descripción**********************************
+ * Encuentra y devuelve el último índice en el que aparece un carácter específico en la cadena actual.
+ * 
+ *****Retorno**************************************
+ * Retorna el índice de la última ocurrencia del carácter especificado en la cadena.
+ * Si el carácter no se encuentra en la cadena, se retorna -1.
+ * 
+ *****Entradas*************************************
+ * pCaracter: El carácter del cual se desea encontrar el último índice en la cadena.
+ * 
+ **************************************************/
+
 int String::ultimoIndice(char pCaracter) {
     for (int i = len() - 1; i >= 0; --i) {
         if (cadena[i] == pCaracter) {
@@ -35,6 +107,20 @@ int String::ultimoIndice(char pCaracter) {
     }
     return -1;
 }
+
+/*****Nombre***************************************
+ * cambiarCadena
+ * 
+ *****Descripción**********************************
+ * Cambia la cadena actual por una nueva cadena especificada.
+ * 
+ *****Retorno**************************************
+ * No retorna nada.
+ * 
+ *****Entradas*************************************
+ * pNuevaCadena: Puntero a una cadena de caracteres que se utilizará para reemplazar la cadena actual.
+ * 
+ **************************************************/
 
 void String::cambiarCadena(const char* pNuevaCadena) {
     if (pNuevaCadena == nullptr)
@@ -53,12 +139,41 @@ void String::cambiarCadena(const char* pNuevaCadena) {
     cadena = nuevaCadena;
 }
 
+/*****Nombre***************************************
+ * len
+ * 
+ *****Descripción**********************************
+ * Calcula y devuelve la longitud de la cadena actual.
+ * 
+ *****Retorno**************************************
+ * Retorna la cantidad de caracteres en la cadena actual, sin contar el carácter nulo.
+ * 
+ *****Entradas*************************************
+ * No se requiere entrada.
+ * 
+ **************************************************/
+
 int String::len() {
     int largo = 0;
     while (cadena[largo] != '\0')
         largo++;
     return largo;
 }
+
+/*****Nombre***************************************
+ * equals
+ * 
+ *****Descripción**********************************
+ * Compara la cadena actual con una cadena de caracteres dada para verificar si son idénticas.
+ * La cadena actual debe estar correctamente inicializada y tener contenido válido.
+ * 
+ *****Retorno**************************************
+ * Retorna verdadero (true) si las cadenas son idénticas en contenido y longitud, o falso (false) en caso contrario.
+ * 
+ *****Entradas*************************************
+ * pCadena: Puntero a una cadena de caracteres que se comparará con la cadena actual.
+ * 
+ **************************************************/
 
 bool String::equals(const char* pCadena) {
 
@@ -86,7 +201,7 @@ bool String::equals(const char* pCadena) {
  * 
  *****Retorno**************************************
  * Retorna un arreglo de punteros a objetos String, donde cada puntero apunta a un segmento
- * de la cadena original. El último elemento del arreglo es un puntero nulo (nullptr).
+ * de la cadena original. El último elemento del arreglo es un puntero nulo.
  * 
  *****Entradas*************************************
  * pCaracterDelimitador: El carácter que se utilizará para delimitar y dividir la cadena.
@@ -131,6 +246,21 @@ String** String::split(char pCaracterDelimitador) {
 
     return nullptr;  // Returna null de ser necesario
 }
+
+/*****Nombre***************************************
+ * concatenarEn
+ * 
+ *****Descripción**********************************
+ * Concatena una cadena de caracteres dada en un índice específico de la cadena actual.
+ * 
+ *****Retorno**************************************
+ * No retorna nada.
+ * 
+ *****Entradas*************************************
+ * pString: Puntero a una cadena de caracteres que se concatenará en la cadena actual.
+ * pIndice: Índice en el cual se insertará la cadena proporcionada. No puede ser un valor negativo.
+ * 
+ **************************************************/
 
 void String::concatenarEn(const char* pString, int pIndice) {
     if (pString == nullptr || pIndice < 0) {
@@ -179,6 +309,20 @@ void String::concatenarEn(const char* pString, int pIndice) {
     cadena = newCadena;
 }
 
+/*****Nombre***************************************
+ * concatenar
+ * 
+ *****Descripción**********************************
+ * Concatena una cadena de caracteres dada al final de la cadena actual.
+ * 
+ *****Retorno**************************************
+ * No retorna nada.
+ * 
+ *****Entradas*************************************
+ * CadenaNueva: Puntero a una cadena de caracteres que se concatenará al final de la cadena actual.
+ * 
+ **************************************************/
+
 void String::concatenar(const char* CadenaNueva) {
     if (CadenaNueva == nullptr) {
         return;
@@ -211,6 +355,21 @@ void String::concatenar(const char* CadenaNueva) {
     delete[] cadena;
     cadena= CadenaResultante;
 }
+
+/*****Nombre***************************************
+ * concatenarCadenas
+ * 
+ *****Descripción**********************************
+ * Concatena múltiples cadenas de caracteres dadas al final de la cadena actual.
+ * 
+ *****Retorno**************************************
+ * No retorna nada.
+ * 
+ *****Entradas*************************************
+ * CadenaNueva: Un arreglo de punteros a cadenas de caracteres que serán concatenadas al final
+ *              de la cadena actual. El arreglo debe estar finalizado con un puntero nulo.
+ * 
+ **************************************************/
 
 void String::concatenarCadenas(const char* CadenaNueva[]) {
     int LargoCadena = 0;
@@ -266,6 +425,21 @@ void String::concatenarCadenas(const char* CadenaNueva[]) {
     cadena= CadenaResultante;
 }
 
+/*****Nombre***************************************
+ * reemplazarEn
+ * 
+ *****Descripción**********************************
+ * Reemplaza una porción de la cadena actual en un índice específico con una cadena de reemplazo dada.
+ * 
+ *****Retorno**************************************
+ * No retorna nada.
+ * 
+ *****Entradas*************************************
+ * pReemplazo: Puntero a una cadena de caracteres que se utilizará como reemplazo en la cadena actual.
+ * pIndice: Índice donde se realizará el reemplazo. No puede ser un valor negativo.
+ * 
+ **************************************************/
+
 void String::reemplazarEn(const char* pReemplazo, int pIndice) {
     if (pReemplazo == nullptr || pIndice < 0)
         return;
@@ -293,6 +467,21 @@ void String::reemplazarEn(const char* pReemplazo, int pIndice) {
     delete[] cadena;
     cadena = newCadena;
 }
+
+/*****Nombre***************************************
+ * reemplazarOcurrencias
+ * 
+ *****Descripción**********************************
+ * Reemplaza todas las ocurrencias de una subcadena dada por otra subcadena en la cadena actual.
+ * 
+ *****Retorno**************************************
+ * No retorna nada.
+ * 
+ *****Entradas*************************************
+ * pOcurrencia: Puntero a una subcadena de caracteres que se buscará para ser reemplazada.
+ * pNewTexto: Puntero a una subcadena de caracteres que se utilizará como reemplazo.
+ * 
+ **************************************************/
 
 void String::reemplazarOcurrencias(const char* pOcurrencia, const char* pNewTexto) {
     if (pOcurrencia == nullptr || pNewTexto == nullptr)
@@ -351,6 +540,21 @@ void String::reemplazarOcurrencias(const char* pOcurrencia, const char* pNewText
     cadena = newCadena;
 }
 
+/*****Nombre***************************************
+ * guardarEnArchivo
+ * 
+ *****Descripción**********************************
+ * Guarda el contenido de la cadena actual en un archivo especificado, utilizando un modo de apertura dado.
+ * 
+ *****Retorno**************************************
+ * No retorna nada.
+ * 
+ *****Entradas*************************************
+ * path: Puntero a una cadena de caracteres que representa la ruta del archivo en el cual se guardará el contenido.
+ * mode: Puntero a una cadena de caracteres que representa el modo de apertura del archivo.
+ * 
+ **************************************************/
+
 void String::guardarEnArchivo(const char* path, const char* mode) {
     if (path == nullptr || mode == nullptr) {
         return;
@@ -366,6 +570,20 @@ void String::guardarEnArchivo(const char* path, const char* mode) {
         std::cerr << "No se pudo abrir el archivo: " << path << std::endl;
     }
 }
+
+/*****Nombre***************************************
+ * leerArchivo
+ * 
+ *****Descripción**********************************
+ * Lee el contenido de un archivo especificado y reemplaza la cadena actual con dicho contenido.
+ * 
+ *****Retorno**************************************
+ * No retorna nada.
+ * 
+ *****Entradas*************************************
+ * path: Puntero a una cadena de caracteres que representa la ruta del archivo que se leerá.
+ * 
+ **************************************************/
 
 void String::leerArchivo(const char* path) {
     if (path == nullptr) {
