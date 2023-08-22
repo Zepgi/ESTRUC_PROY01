@@ -118,19 +118,19 @@ void String::concatenarEn(const char* str, int index) {
     // Implementar lógica para concatenar el string en el índice especificado
 }
 
-char* String::concatenar(const char* CadenaNueva) {
+void String::concatenar(const char* CadenaNueva) {
     if (CadenaNueva == nullptr) {
-        return nullptr;
+        return;
     }
 
     int LargoOriginal = 0;
     int LargoNueva = 0;
 
-    while (cadena[LargoOriginal] != '\0') {
+    while (cadena[LargoOriginal] != '\0'){
         LargoOriginal++;
     }
 
-    while (CadenaNueva[LargoNueva] != '\0') {
+    while (CadenaNueva[LargoNueva] != '\0'){
         LargoNueva++;
     }
 
@@ -147,8 +147,8 @@ char* String::concatenar(const char* CadenaNueva) {
     }
     CadenaResultante[nuevoLargo] = '\0';
 
-    delete[] CadenaResultante;
-    return CadenaResultante;
+    delete[] cadena;
+    cadena= CadenaResultante;
 }
 
 char* String::concatenarCadenas(const char* CadenaNueva[]) {
