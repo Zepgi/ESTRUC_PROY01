@@ -415,6 +415,9 @@ int main() {
 
     miString.concatenar("SIIIIII");
 
+    const char* ArrCadenas[] = {" ", "JAJAJJA ", "Vío", nullptr};
+    miString.concatenarCadenas(ArrCadenas);
+
     miString.split('a');
 
     miString.concatenarEn("yolo", 1);
