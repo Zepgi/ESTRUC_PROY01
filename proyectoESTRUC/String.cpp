@@ -196,15 +196,14 @@ void String::concatenar(const char* CadenaNueva) {
     cadena= CadenaResultante;
 }
 
-char* String::concatenarCadenas(const char* CadenaNueva[]) {
+void String::concatenarCadenas(const char* CadenaNueva[]) {
     int LargoCadena = 0;
     int LargoOriginal= 0;
     int CantidadCadenas = 0;
 
-    while (cadena[CantidadCadenas] != '\0') {
+    while (CadenaNueva[CantidadCadenas] != nullptr) {
         CantidadCadenas++;
     }
-
 
     while (cadena[LargoOriginal] != '\0') {
         LargoOriginal++;
@@ -245,10 +244,10 @@ char* String::concatenarCadenas(const char* CadenaNueva[]) {
             LargoOriginal++;
         }
     }
-    delete[] CadenaResultante;
-    CadenaResultante[LargoCadena] = '\0';
+    CadenaResultante[LargoCadena] = '\0';;
 
-    return CadenaResultante;
+    delete[] cadena;
+    cadena= CadenaResultante;
 }
 
 void String::reemplazarEn(const char* pReemplazo, int pIndice) {
