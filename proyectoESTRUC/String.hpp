@@ -3,7 +3,7 @@
 
 class String {
 public:
-    String(const char* pCadena);  // Constructor
+    String(char* pCadena);  // Constructor
     ~String();  // Destructor
 
     char caracterEn(int pIndice);
@@ -11,18 +11,18 @@ public:
     int ultimoIndice(char pCaracter);
     void cambiarCadena(const char* pNewCadena);
     int len();
-    bool operator==(const String pCadena);
+    bool equals(const char* pCadena);
 
-    String** split(char pDelimitador);
+    void split(char pDelimitador);
     void concatenarEn(const char* pString, int pIndice);
-    char* concatenar(const char* pString);
-    char* concatenarCadenas(const char** strArray);
+    void concatenar(const char* pString);
+    void concatenarCadenas(const char** strArray);
     void reemplazarEn(const char* pReemplazo, int pIndice);
     void reemplazarOcurrencias(const char* pOcurrencia, const char* pReemplazo);
     void guardarEnArchivo(const char* path, const char* mode);
     void leerArchivo(const char* path);
 
-private:
+
     char* cadena;  // Actual character array
 };
 
