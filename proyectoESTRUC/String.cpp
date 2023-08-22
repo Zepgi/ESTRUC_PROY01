@@ -337,11 +337,38 @@ void String::reemplazarOcurrencias(const char* pOcurrencia, const char* pNewText
     cadena = newCadena;
 }
 
-
 void String::guardarEnArchivo(const char* path, const char* mode) {
+    if (path == nullptr || mode == nullptr) {
+        return;
+    }
+
+    std::ofstream file;
+    file.open(path, std::ios::out | std::ios::app);  // Modo de apertura
+
+    if (file.is_open()) {
+        file << cadena;
+        file.close();
+    } else {
+        std::cerr << "No se pudo abrir el archivo: " << path << std::endl;
+    }
 }
 
 void String::leerArchivo(const char* path) {
+    if (path == nullptr) {
+        return;
+    }
+
+    std::ifstream file;
+    file.open(path);  // Modo de apertura por defecto es std::ios::in
+
+    if (file.is_open()) {
+        std::string content((std::istreambuf_iterator<char>(file)),
+                            std::istreambuf_iterator<char>());
+        cambiarCadena(content.c_str());
+        file.close();
+    } else {
+        std::cerr << "No se pudo abrir el archivo: " << path << std::endl;
+    }
 }
 
 int main() {
@@ -373,9 +400,24 @@ int main() {
     miString.reemplazarEn(", mírame", 35);
 
     miString.concatenar("SIIIIII");
-    
+
+    miString.split('a');
+
+    miString.concatenarEn("yolo", 1);
+
     // Imprimir el resultado final
-    std::cout << "Resultado final: " << miString.cadena << std::endl;
+    std::cout << "Resultado final: " << miString.obtenerCadena() << std::endl;
+
+    // Guardar el contenido del String en un archivo
+    miString.guardarEnArchivo("x.txt", "w");
+
+    std::cout << "Contenido guardado en archivo." << std::endl;
+
+    // Leer el contenido de un archivo y actualizar el String
+    miString.leerArchivo("y.txt");
+
+    std::cout << "Contenido después de leer el archivo: " << miString.obtenerCadena() << std::endl;
+
 
     return 0;
 }
