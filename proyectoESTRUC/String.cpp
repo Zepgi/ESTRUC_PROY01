@@ -149,8 +149,54 @@ char* String::concatenar(const char* CadenaNueva) {
     return CadenaResultante;
 }
 
-void String::concatenarCadenas(const char** strs, int count) {
-    // Implementar lógica para concatenar un arreglo de cadenas al final del string
+char* concatenarCadenas(const char* cadena, char* CadenaNueva[], int CantidadCadenas) {
+    int LargoCadena = 0;
+    int LargoOriginal= 0;
+
+
+    while (cadena[LargoOriginal] != '\0') {
+        LargoOriginal++;
+    }
+    
+    LargoCadena= LargoCadena + LargoOriginal;
+
+    for (int i = 0; i < CantidadCadenas; i++) {
+        
+        const char* palabra;
+        palabra= CadenaNueva[i];
+
+        int LargoPalabra = 0;
+        while (palabra[LargoPalabra] != '\0') {
+            LargoPalabra++;
+        }
+        LargoCadena= LargoCadena + LargoPalabra;
+    }
+
+    char* CadenaResultante = new char[LargoCadena + 1];
+
+    for (int i = 0; i < LargoOriginal; i++) {
+        CadenaResultante[i] = cadena[i];
+    }
+
+    for (int i = 0; i < CantidadCadenas; i++) {
+        
+        const char* palabra;
+        palabra= CadenaNueva[i];
+
+        int LargoPalabra = 0;
+        while (palabra[LargoPalabra] != '\0') {
+            LargoPalabra++;
+        }
+
+        for (int x = 0; x < LargoPalabra; x++) {
+            CadenaResultante[LargoOriginal] = palabra[x];
+            LargoOriginal++;
+        }
+    }
+    delete[] CadenaResultante;
+    CadenaResultante[LargoCadena] = '\0';
+
+    return CadenaResultante;
 }
 
 void String::reemplazarEn(const char* pReemplazo, int pIndice) {
