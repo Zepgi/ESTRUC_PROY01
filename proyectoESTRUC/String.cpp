@@ -77,6 +77,22 @@ bool String::equals(const char* pCadena) {
     return true;
 }
 
+/*****Nombre***************************************
+ * split
+ * 
+ *****Descripción**********************************
+ * Divide la cadena actual en segmentos utilizando el carácter delimitador especificado.
+ * Los segmentos resultantes se almacenan en un arreglo dinámico de objetos String.
+ * 
+ *****Retorno**************************************
+ * Retorna un arreglo de punteros a objetos String, donde cada puntero apunta a un segmento
+ * de la cadena original. El último elemento del arreglo es un puntero nulo (nullptr).
+ * 
+ *****Entradas*************************************
+ * pCaracterDelimitador: El carácter que se utilizará para delimitar y dividir la cadena.
+ * 
+ **************************************************/
+
 String** String::split(char pCaracterDelimitador) {
     int contador = 1;
     for (int i = 0; i < len(); i++) {
