@@ -117,8 +117,51 @@ String** String::split(char pCaracterDelimitador) {
     return listaSplit;
 }
 
-void String::concatenarEn(const char* str, int index) {
-    // Implementar lógica para concatenar el string en el índice especificado
+void String::concatenarEn(const char* pString, int pIndice) {
+    if (pString == nullptr || pIndice < 0) {
+        return;
+    }
+
+    int pStringLen = 0;
+    while (pString[pStringLen] != '\0') {
+        pStringLen++;
+    }
+
+    int newLen = len() + pStringLen;
+
+    if (pIndice > len()) {
+        pIndice = len();  // Ajustamos el índice si es mayor que la longitud actual
+    }
+
+    char* newCadena = new char[newLen + 1];  // +1 para el carácter nulo
+
+    int i = 0;  // Índice para newData
+    int j = 0;  // Índice para data (cadena original)
+
+    // Copiamos los caracteres antes del índice deseado
+    while (i < pIndice) {
+        newCadena[i] = cadena[j];
+        i++;
+        j++;
+    }
+
+    // Copiamos la cadena a insertar
+    for (int k = 0; k < pStringLen; k++) {
+        newCadena[i] = pString[k];
+        i++;
+    }
+
+    // Continuamos copiando los caracteres restantes de la cadena original
+    while (j < len()) {
+        newCadena[i] = cadena[j];
+        i++;
+        j++;
+    }
+
+    newCadena[newLen] = '\0';
+
+    delete[] cadena;
+    cadena = newCadena;
 }
 
 void String::concatenar(const char* CadenaNueva) {
