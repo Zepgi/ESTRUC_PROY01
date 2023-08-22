@@ -319,41 +319,41 @@ void String::concatenarEn(const char* pString, int pIndice) {
  * No retorna nada.
  * 
  *****Entradas*************************************
- * CadenaNueva: Puntero a una cadena de caracteres que se concatenará al final de la cadena actual.
+ * pCadenaNueva: Puntero a una cadena de caracteres que se concatenará al final de la cadena actual.
  * 
  **************************************************/
 
-void String::concatenar(const char* CadenaNueva) {
-    if (CadenaNueva == nullptr) {
+void String::concatenar(const char *pCadenaNueva) {
+    if (pCadenaNueva == nullptr) {
         return;
-    }
+    }//fin if (pCadena == nullptr)
 
-    int LargoOriginal = 0;
-    int LargoNueva = 0;
+    int largo_original = 0;
+    int largo_nueva = 0;
 
-    while (cadena[LargoOriginal] != '\0'){
-        LargoOriginal++;
-    }
+    while (cadena[largo_original] != '\0') {
+        largo_original++;
+    }//fin while(cadena[larho_original] != '\0')
 
-    while (CadenaNueva[LargoNueva] != '\0'){
-        LargoNueva++;
-    }
+    while (pCadenaNueva[largo_nueva] != '\0') {
+        largo_nueva++;
+    }//fin while(pCadena[largo_nueva] != '\0')
 
-    int nuevoLargo = LargoOriginal+LargoNueva;
+    int nuevo_largo = largo_original+largo_nueva;
 
-    char* CadenaResultante = new char[nuevoLargo + 1];
-    for (int i = 0; i < nuevoLargo; i++) {
-        if (i < LargoOriginal){
-            CadenaResultante[i] = cadena[i];
-        } 
-        else {
-            CadenaResultante[i] = CadenaNueva[i- LargoOriginal];
-        } 
-    }
-    CadenaResultante[nuevoLargo] = '\0';
+    char* pCadenaResultante = new char[nuevo_largo + 1];
+    for (int i = 0; i < nuevo_largo; i++) {
+        if (i < largo_original) {
+            pCadenaResultante[i] = cadena[i];
+        } else {
+            pCadenaResultante[i] = pCadenaNueva[i- largo_original];
+        }//if (i < largo_original)
+
+    }// fin for (int i = 0; i < nuevo_largo; i++)
+    pCadenaResultante[nuevo_largo] = '\0';
 
     delete[] cadena;
-    cadena= CadenaResultante;
+    cadena= pCadenaResultante;
 }
 
 /*****Nombre***************************************
