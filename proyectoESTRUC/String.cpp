@@ -77,41 +77,44 @@ bool String::equals(const char* pCadena) {
     return true;
 }
 
-String** String::split(char delimiter) const {
-    // Implementar lógica para dividir el string en partes usando el delimitador
-    std::vector<String*> partes;
-    
-    int inicio = 0;
-    int fin = 0;
+String** String::split(char pCaracterDelimitador) {
+    int contador = 1;
+    for (int i = 0; i < len(); i++) {
+        if (cadena[i] == pCaracterDelimitador)
+            contador++;
+    }
 
-    while (cadena[fin] != '\0') {
-        if (cadena[fin] == caracter) {
-            int longitud = fin - inicio; //Obtiene la longitud
-            char* subcadena = new char[longitud + 1];
-            strncpy(subcadena, cadena + inicio, longitud);
-            subcadena[longitud] = '\0';
-            partes.push_back(new String(subcadena));
-            delete[] subcadena;  // Liberar memoria de la subcadena temporal
-            inicio = fin + 1;
+    String** listaSplit = new String*[contador + 1];  // +1 para el puntero nulo al final
+
+    int indiceInicio = 0;
+    int indiceLista = 0;
+    for (int i = 0; i < len(); i++) {
+        if (cadena[i] == pCaracterDelimitador) {
+            int splitLen = i - indiceInicio;
+            char* split = new char[splitLen + 1];
+            for (int j = 0; j < splitLen; j++) {
+                split[j] = cadena[indiceInicio + j];
+            }
+            split[splitLen] = '\0';
+            listaSplit[indiceLista++] = new String(split);
+            delete[] split;
+            indiceInicio = i + 1;
         }
-        fin++;
     }
 
-    int longitud = fin - inicio;
-    char* subcadena = new char[longitud + 1];
-    strncpy(subcadena, cadena + inicio, longitud);
-    subcadena[longitud] = '\0';
-    partes.push_back(new String(subcadena));
-    delete[] subcadena;  // Liberar memoria de la última subcadena temporal
-
-    String** arregloPartes = new String*[partes.size() + 1];
-    for (size_t i = 0; i < partes.size(); ++i) {
-        arregloPartes[i] = partes[i];
+    int splitLen = len() - indiceInicio;
+    char* splitFinal = new char[splitLen + 1];
+    for (int j = 0; j < splitLen; j++) {
+        splitFinal[j] = cadena[indiceInicio + j];
     }
-    arregloPartes[partes.size()] = nullptr;
+    splitFinal[splitLen] = '\0';
+    listaSplit[indiceLista] = new String(splitFinal);
+    delete[] splitFinal;
 
-    return arregloPartes;
-    //return nullptr;
+    listaSplit[contador] = nullptr;  // Agregamos el puntero nulo al final
+
+    std::cout << "Resultado split: " << listaSplit << std::endl;
+    return listaSplit;
 }
 
 void String::concatenarEn(const char* str, int index) {
