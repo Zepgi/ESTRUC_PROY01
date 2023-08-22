@@ -11,6 +11,7 @@ public:
     int ultimoIndice(char pCaracter);
     void cambiarCadena(const char* pNewCadena);
     int len();
+    const char* obtenerCadena() const;
     bool equals(const char* pCadena);
 
     String** split(char pDelimitador);
@@ -22,7 +23,7 @@ public:
     void guardarEnArchivo(const char* path, const char* mode);
     void leerArchivo(const char* path);
 
-
+private:
     char* cadena;  // Actual character array
 };
 
