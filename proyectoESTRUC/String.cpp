@@ -366,63 +366,64 @@ void String::concatenar(const char *pCadenaNueva) {
  * No retorna nada.
  * 
  *****Entradas*************************************
- * CadenaNueva: Un arreglo de punteros a cadenas de caracteres que serán concatenadas al final
+ * pNuevaCadena: Un arreglo de punteros a cadenas de caracteres que serán concatenadas al final
  *              de la cadena actual. El arreglo debe estar finalizado con un puntero nulo.
  * 
  **************************************************/
 
-void String::concatenarCadenas(const char* CadenaNueva[]) {
-    int LargoCadena = 0;
-    int LargoOriginal= 0;
-    int CantidadCadenas = 0;
+void String::concatenarCadenas(const char *pNuevaCadena[]) {
+    int largo_cadena = 0;
+    int largo_original= 0;
+    int cantidad_cadenas = 0;
 
-    while (CadenaNueva[CantidadCadenas] != nullptr) {
-        CantidadCadenas++;
-    }
+    while (pNuevaCadena[cantidad_cadenas] != nullptr) {
+        cantidad_cadenas++;
+    }//fin while (pNuevaCadena[cantidad_cadenas] != nullptr)
 
-    while (cadena[LargoOriginal] != '\0') {
-        LargoOriginal++;
-    }
+    while (cadena[largo_original] != '\0') {
+        largo_original++;
+    }//fin while (cadena[largo_original] != '\0')
     
-    LargoCadena= LargoCadena + LargoOriginal;
+    largo_cadena= largo_cadena + largo_original;
 
-    for (int i = 0; i < CantidadCadenas; i++) {
-        
-        const char* palabra;
-        palabra= CadenaNueva[i];
+    for (int i = 0; i < cantidad_cadenas; i++) {
+        const char *pPalabra;
+        pPalabra= pNuevaCadena[i];
 
-        int LargoPalabra = 0;
-        while (palabra[LargoPalabra] != '\0') {
-            LargoPalabra++;
-        }
-        LargoCadena= LargoCadena + LargoPalabra;
-    }
+        int largo_palabra = 0;
+        while (pPalabra[largo_palabra] != '\0') {
+            largo_palabra++;
+        }//fin while (pPalabra[largo_palabra] != '\0')
 
-    char* CadenaResultante = new char[LargoCadena + 1];
+        largo_cadena= largo_cadena + largo_palabra;
 
-    for (int i = 0; i < LargoOriginal; i++) {
-        CadenaResultante[i] = cadena[i];
-    }
+    }//fin for (int i = 0; i < cantidad_cadenas; i++)
 
-    for (int i = 0; i < CantidadCadenas; i++) {
-        
-        const char* palabra;
-        palabra= CadenaNueva[i];
+    char *pCadenaResultante = new char[largo_cadena + 1];
 
-        int LargoPalabra = 0;
-        while (palabra[LargoPalabra] != '\0') {
-            LargoPalabra++;
-        }
+    for (int i = 0; i < largo_original; i++) {
+        pCadenaResultante[i] = cadena[i];
+    }// fin for (int i = 0; i < largo_original; i++)
 
-        for (int x = 0; x < LargoPalabra; x++) {
-            CadenaResultante[LargoOriginal] = palabra[x];
-            LargoOriginal++;
-        }
-    }
-    CadenaResultante[LargoCadena] = '\0';;
+    for (int i = 0; i < cantidad_cadenas; i++) {
+        const char *pPalabra;
+        pPalabra= pNuevaCadena[i];
+
+        int largo_palabra = 0;
+        while (pPalabra[largo_palabra] != '\0') {
+            largo_palabra++;
+        }//fin while (pPalabra[largo_palabra] != '\0')
+
+        for (int x = 0; x < largo_palabra; x++) {
+            pCadenaResultante[largo_original] = pPalabra[x];
+            largo_original++;
+        }//fin for (int x = 0; x < largo_palabra; x++)
+
+    }//fin for (int i = 0; i < cantidad_cadenas; i++)
+    pCadenaResultante[largo_cadena] = '\0';
 
     delete[] cadena;
-    cadena= CadenaResultante;
+    cadena= pCadenaResultante;
 }
 
 /*****Nombre***************************************
