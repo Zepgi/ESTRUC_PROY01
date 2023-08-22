@@ -13,7 +13,7 @@ public:
     int len();
     bool equals(const char* pCadena);
 
-    void split(char pDelimitador);
+    String** split(char pDelimitador);
     void concatenarEn(const char* pString, int pIndice);
     void concatenar(const char* pString);
     void concatenarCadenas(const char** strArray);
