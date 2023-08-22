@@ -88,33 +88,32 @@ String** String::split(char pCaracterDelimitador) {
 
     int indiceInicio = 0;
     int indiceLista = 0;
-    for (int i = 0; i < len(); i++) {
-        if (cadena[i] == pCaracterDelimitador) {
+    std::cout << "Lista de segmentos:" << std::endl;
+    for (int i = 0; i <= len(); i++) {  // <= aquí para procesar el último segmento
+        if (i == len() || cadena[i] == pCaracterDelimitador) {
             int splitLen = i - indiceInicio;
             char* split = new char[splitLen + 1];
             for (int j = 0; j < splitLen; j++) {
                 split[j] = cadena[indiceInicio + j];
             }
             split[splitLen] = '\0';
-            listaSplit[indiceLista++] = new String(split);
+
+            std::cout << "- " << split << std::endl;
+
             delete[] split;
             indiceInicio = i + 1;
         }
     }
 
-    int splitLen = len() - indiceInicio;
-    char* splitFinal = new char[splitLen + 1];
-    for (int j = 0; j < splitLen; j++) {
-        splitFinal[j] = cadena[indiceInicio + j];
-    }
-    splitFinal[splitLen] = '\0';
-    listaSplit[indiceLista] = new String(splitFinal);
-    delete[] splitFinal;
-
     listaSplit[contador] = nullptr;  // Agregamos el puntero nulo al final
 
-    std::cout << "Resultado split: " << listaSplit << std::endl;
-    return listaSplit;
+    // Liberar memoria de los objetos String y el arreglo de punteros
+    for (int i = 0; listaSplit[i] != nullptr; i++) {
+        delete listaSplit[i];
+    }
+    delete[] listaSplit; //Libera la memoria
+
+    return nullptr;  // Returna null de ser necesario
 }
 
 void String::concatenarEn(const char* pString, int pIndice) {
