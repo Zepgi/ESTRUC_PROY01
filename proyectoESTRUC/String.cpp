@@ -17,8 +17,8 @@
  * 
  **************************************************/
 
-String::String(char* pCadena) {
-    cadena = pCadena;
+String::String(char *pCadena) {
+    gpCadena = pCadena;
 }
 
 /*****Nombre***************************************
@@ -36,7 +36,7 @@ String::String(char* pCadena) {
  **************************************************/
 
 String::~String() {
-    delete[] cadena;
+    delete[] gpCadena;
 }
 
 /*****Nombre***************************************
@@ -50,14 +50,14 @@ String::~String() {
  * al tamaño de la cadena), se devuelve el carácter nulo.
  * 
  *****Entradas*************************************
- * pIndice: El índice del carácter que se desea obtener de la cadena.
+ * indice: El índice del carácter que se desea obtener de la cadena.
  * 
  **************************************************/
 
-char String::caracterEn(int pIndice) {
-    if (pIndice < 0 || pIndice >= len())
+char String::caracterEn(int indice) {
+    if (indice < 0 || indice >= len())
         return '\0';  // Retorna el caracter nulo para índices inválidos
-    return cadena[pIndice];
+    return gpCadena[indice];
 }
 
 /*****Nombre***************************************
@@ -70,18 +70,18 @@ char String::caracterEn(int pIndice) {
  * Retorna el número de ocurrencias del carácter especificado en la cadena.
  * 
  *****Entradas*************************************
- * pCaracter: El carácter que se desea contar en la cadena.
+ * caracter: El carácter que se desea contar en la cadena.
  * 
  **************************************************/
 
-int String::contarCaracter(char pCaracter) {
-    int contador = 0;
+int String::contarCaracter(char caracter) {
+    int aContador = 0;
     for (int i = 0; i < len(); ++i) {
-        if (cadena[i] == pCaracter) {
-            contador++;
+        if (gpCadena[i] == caracter) {
+            aContador++;
         }
     }
-    return contador;
+    return aContador;
 }
 
 /*****Nombre***************************************
@@ -95,13 +95,13 @@ int String::contarCaracter(char pCaracter) {
  * Si el carácter no se encuentra en la cadena, se retorna -1.
  * 
  *****Entradas*************************************
- * pCaracter: El carácter del cual se desea encontrar el último índice en la cadena.
+ * caracter: El carácter del cual se desea encontrar el último índice en la cadena.
  * 
  **************************************************/
 
-int String::ultimoIndice(char pCaracter) {
+int String::ultimoIndice(char caracter) {
     for (int i = len() - 1; i >= 0; --i) {
-        if (cadena[i] == pCaracter) {
+        if (gpCadena[i] == caracter) {
             return i;
         }
     }
@@ -122,25 +122,35 @@ int String::ultimoIndice(char pCaracter) {
  * 
  **************************************************/
 
-void String::cambiarCadena(const char* pNuevaCadena) {
+void String::cambiarCadena(const char *pNuevaCadena) {
     if (pNuevaCadena == nullptr)
         return;
 
-    int nuevoLargo = 0;
-    while (pNuevaCadena[nuevoLargo] != '\0')
-        nuevoLargo++;
+    int aNewLargo = 0;
+    while (pNuevaCadena[aNewLargo] != '\0')
+        aNewLargo++;
 
-    char* nuevaCadena = new char[nuevoLargo + 1];  // +1 para el carácter nulo
-    for (int i = 0; i < nuevoLargo; i++)
-        nuevaCadena[i] = pNuevaCadena[i];
-    nuevaCadena[nuevoLargo] = '\0';
+    char* aNewCadena = new char[aNewLargo + 1];  // +1 para el carácter nulo
+    for (int i = 0; i < aNewLargo; i++)
+        aNewCadena[i] = pNuevaCadena[i];
+    aNewCadena[aNewLargo] = '\0';
 
-    delete[] cadena;
-    cadena = nuevaCadena;
+    delete[] gpCadena;
+    gpCadena = aNewCadena;
 }
 
+
+/*****Nombre***************************************
+ *  obtenerCadenas()
+ *****Descripción**********************************
+ *  Se encarga de retornar la cadena de texto
+ *****Retorno**************************************
+ *  cadena de texto
+ *****Entradas*************************************
+ * No hay entradas
+ **************************************************/
 const char* String::obtenerCadena() const {
-    return cadena;
+    return gpCadena;
 }
 
 
@@ -159,10 +169,10 @@ const char* String::obtenerCadena() const {
  **************************************************/
 
 int String::len() {
-    int largo = 0;
-    while (cadena[largo] != '\0')
-        largo++;
-    return largo;
+    int aLargo = 0;
+    while (gpCadena[aLargo] != '\0')
+        aLargo++;
+    return aLargo;
 }
 
 /*****Nombre***************************************
@@ -180,20 +190,19 @@ int String::len() {
  * 
  **************************************************/
 
-bool String::equals(const char* pCadena) {
+bool String::equals(const char *pCadena) {
 
-    int cadenaLargo = 0;
-    while (pCadena[cadenaLargo] != '\0')
-        cadenaLargo++;
+    int aCadenaLen = 0;
+    while (pCadena[aCadenaLen] != '\0')
+        aCadenaLen++;
 
-    if (len() != cadenaLargo)
+    if (len() != aCadenaLen)
         return false;
 
     for (int i = 0; i < len(); i++) {
-        if (cadena[i] != pCadena[i])
+        if (gpCadena[i] != pCadena[i])
             return false;
     }
-    
     return true;
 }
 
@@ -209,45 +218,45 @@ bool String::equals(const char* pCadena) {
  * de la cadena original. El último elemento del arreglo es un puntero nulo.
  * 
  *****Entradas*************************************
- * pCaracterDelimitador: El carácter que se utilizará para delimitar y dividir la cadena.
+ * caracterDelimitador: El carácter que se utilizará para delimitar y dividir la cadena.
  * 
  **************************************************/
 
-String** String::split(char pCaracterDelimitador) {
-    int contador = 1;
+String** String::split(char caracterDelimitador) {
+    int aContador = 1;
     for (int i = 0; i < len(); i++) {
-        if (cadena[i] == pCaracterDelimitador)
-            contador++;
+        if (gpCadena[i] == caracterDelimitador)
+            aContador++;
     }
 
-    String** listaSplit = new String*[contador + 1];  // +1 para el puntero nulo al final
+    String** apListaSplit = new String*[aContador + 1];  // +1 para el puntero nulo al final
 
-    int indiceInicio = 0;
-    int indiceLista = 0;
+    int aIndiceInicio = 0;
+    int aIndiceLista = 0;
     std::cout << "Lista de segmentos:" << std::endl;
     for (int i = 0; i <= len(); i++) {  // <= aquí para procesar el último segmento
-        if (i == len() || cadena[i] == pCaracterDelimitador) {
-            int splitLen = i - indiceInicio;
-            char* split = new char[splitLen + 1];
-            for (int j = 0; j < splitLen; j++) {
-                split[j] = cadena[indiceInicio + j];
+        if (i == len() || gpCadena[i] == caracterDelimitador) {
+            int aSplitLen = i - aIndiceInicio;
+            char* apSplit = new char[aSplitLen + 1];
+            for (int j = 0; j < aSplitLen; j++) {
+                apSplit[j] = gpCadena[aIndiceInicio + j];
             }
-            split[splitLen] = '\0';
+            apSplit[aSplitLen] = '\0';
 
-            std::cout << "- " << split << std::endl;
+            std::cout << "- " << apSplit << std::endl;
 
-            delete[] split;
-            indiceInicio = i + 1;
+            delete[] apSplit;
+            aIndiceInicio = i + 1;
         }
     }
 
-    listaSplit[contador] = nullptr;  // Agregamos el puntero nulo al final
+    apListaSplit[aContador] = nullptr;  // Agregamos el puntero nulo al final
 
     // Liberar memoria de los objetos String y el arreglo de punteros
-    for (int i = 0; listaSplit[i] != nullptr; i++) {
-        delete listaSplit[i];
+    for (int i = 0; apListaSplit[i] != nullptr; i++) {
+        delete apListaSplit[i];
     }
-    delete[] listaSplit; //Libera la memoria
+    delete[] apListaSplit; //Libera la memoria
 
     return nullptr;  // Returna null de ser necesario
 }
@@ -263,55 +272,55 @@ String** String::split(char pCaracterDelimitador) {
  * 
  *****Entradas*************************************
  * pString: Puntero a una cadena de caracteres que se concatenará en la cadena actual.
- * pIndice: Índice en el cual se insertará la cadena proporcionada. No puede ser un valor negativo.
+ * indice: Índice en el cual se insertará la cadena proporcionada. No puede ser un valor negativo.
  * 
  **************************************************/
 
-void String::concatenarEn(const char* pString, int pIndice) {
-    if (pString == nullptr || pIndice < 0) {
+void String::concatenarEn(const char* pString, int indice) {
+    if (pString == nullptr || indice < 0) {
         return;
     }
 
-    int pStringLen = 0;
-    while (pString[pStringLen] != '\0') {
-        pStringLen++;
+    int aStringLen = 0;
+    while (pString[aStringLen] != '\0') {
+        aStringLen++;
     }
 
-    int newLen = len() + pStringLen;
+    int aNewLen = len() + aStringLen;
 
-    if (pIndice > len()) {
-        pIndice = len();  // Ajustamos el índice si es mayor que la longitud actual
+    if (indice > len()) {
+        indice = len();  // Ajustamos el índice si es mayor que la longitud actual
     }
 
-    char* newCadena = new char[newLen + 1];  // +1 para el carácter nulo
+    char* apNewCadena = new char[aNewLen + 1];  // +1 para el carácter nulo
 
     int i = 0;  // Índice para newData
     int j = 0;  // Índice para data (cadena original)
 
     // Copiamos los caracteres antes del índice deseado
-    while (i < pIndice) {
-        newCadena[i] = cadena[j];
+    while (i < indice) {
+        apNewCadena[i] = gpCadena[j];
         i++;
         j++;
     }
 
     // Copiamos la cadena a insertar
-    for (int k = 0; k < pStringLen; k++) {
-        newCadena[i] = pString[k];
+    for (int k = 0; k < aStringLen; k++) {
+        apNewCadena[i] = pString[k];
         i++;
     }
 
     // Continuamos copiando los caracteres restantes de la cadena original
     while (j < len()) {
-        newCadena[i] = cadena[j];
+        apNewCadena[i] = gpCadena[j];
         i++;
         j++;
     }
 
-    newCadena[newLen] = '\0';
+    apNewCadena[aNewLen] = '\0';
 
-    delete[] cadena;
-    cadena = newCadena;
+    delete[] gpCadena;
+    gpCadena = apNewCadena;
 }
 
 /*****Nombre***************************************
@@ -333,32 +342,32 @@ void String::concatenar(const char *pCadenaNueva) {
         return;
     }//fin if (pCadena == nullptr)
 
-    int largo_original = 0;
-    int largo_nueva = 0;
+    int aLargoOriginal = 0;
+    int aLargoNueva = 0;
 
-    while (cadena[largo_original] != '\0') {
-        largo_original++;
+    while (gpCadena[aLargoOriginal] != '\0') {
+        aLargoOriginal++;
     }//fin while(cadena[larho_original] != '\0')
 
-    while (pCadenaNueva[largo_nueva] != '\0') {
-        largo_nueva++;
+    while (pCadenaNueva[aLargoNueva] != '\0') {
+        aLargoNueva++;
     }//fin while(pCadena[largo_nueva] != '\0')
 
-    int nuevo_largo = largo_original+largo_nueva;
+    int aNuevoLargo = aLargoOriginal + aLargoNueva;
 
-    char* pCadenaResultante = new char[nuevo_largo + 1];
-    for (int i = 0; i < nuevo_largo; i++) {
-        if (i < largo_original) {
-            pCadenaResultante[i] = cadena[i];
+    char* apCadenaResultante = new char[aNuevoLargo + 1];
+    for (int i = 0; i < aNuevoLargo; i++) {
+        if (i < aLargoOriginal) {
+            apCadenaResultante[i] = gpCadena[i];
         } else {
-            pCadenaResultante[i] = pCadenaNueva[i- largo_original];
+            apCadenaResultante[i] = pCadenaNueva[i- aLargoOriginal];
         }//if (i < largo_original)
 
     }// fin for (int i = 0; i < nuevo_largo; i++)
-    pCadenaResultante[nuevo_largo] = '\0';
+    apCadenaResultante[aNuevoLargo] = '\0';
 
-    delete[] cadena;
-    cadena= pCadenaResultante;
+    delete[] gpCadena;
+    gpCadena= apCadenaResultante;
 }
 
 /*****Nombre***************************************
@@ -377,59 +386,60 @@ void String::concatenar(const char *pCadenaNueva) {
  **************************************************/
 
 void String::concatenarCadenas(const char *pNuevaCadena[]) {
-    int largo_cadena = 0;
-    int largo_original= 0;
-    int cantidad_cadenas = 0;
+    int aLargoCadena = 0;
+    int aLargoOriginal= 0;
+    int aCantidadCadenas = 0;
 
-    while (pNuevaCadena[cantidad_cadenas] != nullptr) {
-        cantidad_cadenas++;
-    }//fin while (pNuevaCadena[cantidad_cadenas] != nullptr)
+    while (pNuevaCadena[aCantidadCadenas] != nullptr) {
+        aCantidadCadenas++;
+    }
 
-    while (cadena[largo_original] != '\0') {
-        largo_original++;
+    while (gpCadena[aLargoOriginal] != '\0') {
+        aLargoOriginal++;
     }//fin while (cadena[largo_original] != '\0')
     
-    largo_cadena= largo_cadena + largo_original;
+    aLargoCadena = aLargoCadena + aLargoOriginal;
 
-    for (int i = 0; i < cantidad_cadenas; i++) {
-        const char *pPalabra;
-        pPalabra= pNuevaCadena[i];
+    for (int i = 0; i < aCantidadCadenas; i++) {
+        const char *apPalabra;
+        apPalabra= pNuevaCadena[i];
 
-        int largo_palabra = 0;
-        while (pPalabra[largo_palabra] != '\0') {
-            largo_palabra++;
+        int aLargoPalabra = 0;
+        while (apPalabra[aLargoPalabra] != '\0') {
+            aLargoPalabra++;
         }//fin while (pPalabra[largo_palabra] != '\0')
 
-        largo_cadena= largo_cadena + largo_palabra;
+        aLargoCadena= aLargoCadena + aLargoPalabra;
 
     }//fin for (int i = 0; i < cantidad_cadenas; i++)
 
-    char *pCadenaResultante = new char[largo_cadena + 1];
+    char *apCadenaResultante = new char[aLargoCadena + 1];
 
-    for (int i = 0; i < largo_original; i++) {
-        pCadenaResultante[i] = cadena[i];
-    }// fin for (int i = 0; i < largo_original; i++)
+    for (int i = 0; i < aLargoOriginal; i++) {
+        apCadenaResultante[i] = gpCadena[i];
+    }
 
-    for (int i = 0; i < cantidad_cadenas; i++) {
-        const char *pPalabra;
-        pPalabra= pNuevaCadena[i];
+    for (int i = 0; i < aCantidadCadenas; i++) {
+        const char *apPalabra;
+        apPalabra= pNuevaCadena[i];
 
-        int largo_palabra = 0;
-        while (pPalabra[largo_palabra] != '\0') {
-            largo_palabra++;
-        }//fin while (pPalabra[largo_palabra] != '\0')
+        int aLargoPalabra = 0;
+        while (apPalabra[aLargoPalabra] != '\0') {
+            aLargoPalabra++;
+        }
 
-        for (int x = 0; x < largo_palabra; x++) {
-            pCadenaResultante[largo_original] = pPalabra[x];
-            largo_original++;
-        }//fin for (int x = 0; x < largo_palabra; x++)
+        for (int x = 0; x < aLargoPalabra; x++) {
+            apCadenaResultante[aLargoOriginal] = apPalabra[x];
+            aLargoOriginal++;
+        }
 
-    }//fin for (int i = 0; i < cantidad_cadenas; i++)
-    pCadenaResultante[largo_cadena] = '\0';
+    }
+    apCadenaResultante[aLargoCadena] = '\0';
 
-    delete[] cadena;
-    cadena= pCadenaResultante;
+    delete[] gpCadena;
+    gpCadena= apCadenaResultante;
 }
+
 
 /*****Nombre***************************************
  * reemplazarEn
@@ -446,32 +456,32 @@ void String::concatenarCadenas(const char *pNuevaCadena[]) {
  * 
  **************************************************/
 
-void String::reemplazarEn(const char* pReemplazo, int pIndice) {
-    if (pReemplazo == nullptr || pIndice < 0)
+void String::reemplazarEn(const char* pReemplazo, int indice) {
+    if (pReemplazo == nullptr || indice < 0)
         return;
 
-    int reemplazoLen = 0;
-    while (pReemplazo[reemplazoLen] != '\0')
-        reemplazoLen++;
+    int aReemplazoLen = 0;
+    while (pReemplazo[aReemplazoLen] != '\0')
+        aReemplazoLen++;
 
-    int newLen = len() + reemplazoLen - 1;
+    int aNewLen = len() + aReemplazoLen - 1;
 
-    char* newCadena = new char[newLen + 1];  // +1 para el carácter nulo
+    char* apNewCadena = new char[aNewLen + 1];  
 
-    int i = 0;  // Índice para newCadena
-    int j = 0;  // Índice para cadena
+    int i = 0;
+    int j = 0;
     while (j < len()) {
-        if (i == pIndice) {
-            for (int k = 0; k < reemplazoLen; k++)
-                newCadena[i++] = pReemplazo[k];
+        if (i == indice) {
+            for (int k = 0; k < aReemplazoLen; k++)
+                apNewCadena[i++] = pReemplazo[k];
             j++;
         } else {
-            newCadena[i++] = cadena[j++];
+            apNewCadena[i++] = gpCadena[j++];
         }
     }
 
-    delete[] cadena;
-    cadena = newCadena;
+    delete[] gpCadena;
+    gpCadena = apNewCadena;
 }
 
 /*****Nombre***************************************
@@ -493,57 +503,57 @@ void String::reemplazarOcurrencias(const char* pOcurrencia, const char* pNewText
     if (pOcurrencia == nullptr || pNewTexto == nullptr)
         return;
 
-    int ocurrenciaLen = 0;
-    while (pOcurrencia[ocurrenciaLen] != '\0')
-        ocurrenciaLen++;
+    int aOcurrenciaLen = 0;
+    while (pOcurrencia[aOcurrenciaLen] != '\0')
+        aOcurrenciaLen++;
 
-    int newTextoLen = 0;
-    while (pNewTexto[newTextoLen] != '\0')
-        newTextoLen++;
+    int aNewTextoLen = 0;
+    while (pNewTexto[aNewTextoLen] != '\0')
+        aNewTextoLen++;
 
-    int newCadenaLen = len();
+    int aNewCadenaLen = len();
 
     // Calcular la cantidad de veces que ocurre pOcurrencia en cadena
-    int contador = 0;
+    int aContador = 0;
     for (int i = 0; i < len(); i++) {
-        bool coincide = true;
-        for (int j = 0; j < ocurrenciaLen; j++) {
-            if (cadena[i + j] != pOcurrencia[j]) {
-                coincide = false;
+        bool aCoincide = true;
+        for (int j = 0; j < aOcurrenciaLen; j++) {
+            if (gpCadena[i + j] != pOcurrencia[j]) {
+                aCoincide = false;
                 break;
             }
         }
-        if (coincide) {
-            contador++;
-            i += ocurrenciaLen - 1;
+        if (aCoincide) {
+            aContador++;
+            i += aOcurrenciaLen - 1;
         }
     }
 
-    newCadenaLen += (newTextoLen - ocurrenciaLen) * contador;
+    aNewCadenaLen += (aNewTextoLen - aOcurrenciaLen) * aContador;
 
-    char* newCadena = new char[newCadenaLen + 1];  // +1 para el carácter nulo
+    char* apNewCadena = new char[aNewCadenaLen + 1];  // +1 para el carácter nulo
 
     int i = 0;  // Índice para newCadena
     int j = 0;  // Índice para cadena
     while (j < len()) {
-        bool coincide = true;
-        for (int k = 0; k < ocurrenciaLen; k++) {
-            if (cadena[j + k] != pOcurrencia[k]) {
-                coincide = false;
+        bool aCoincide = true;
+        for (int k = 0; k < aOcurrenciaLen; k++) {
+            if (gpCadena[j + k] != pOcurrencia[k]) {
+                aCoincide = false;
                 break;
             }
         }
-        if (coincide) {
-            for (int k = 0; k < newTextoLen; k++)
-                newCadena[i++] = pNewTexto[k];
-            j += ocurrenciaLen;
+        if (aCoincide) {
+            for (int k = 0; k < aNewTextoLen; k++)
+                apNewCadena[i++] = pNewTexto[k];
+            j += aOcurrenciaLen;
         } else {
-            newCadena[i++] = cadena[j++];
+            apNewCadena[i++] = gpCadena[j++];
         }
     }
 
-    delete[] cadena;
-    cadena = newCadena;
+    delete[] gpCadena;
+    gpCadena = apNewCadena;
 }
 
 /*****Nombre***************************************
@@ -556,24 +566,23 @@ void String::reemplazarOcurrencias(const char* pOcurrencia, const char* pNewText
  * No retorna nada.
  * 
  *****Entradas*************************************
- * path: Puntero a una cadena de caracteres que representa la ruta del archivo en el cual se guardará el contenido.
- * mode: Puntero a una cadena de caracteres que representa el modo de apertura del archivo.
+ * pDestino: Puntero a una cadena de caracteres que representa la ruta del archivo en el cual se guardará el contenido.
  * 
  **************************************************/
 
-void String::guardarEnArchivo(const char* path, const char* mode) {
-    if (path == nullptr || mode == nullptr) {
+void String::guardarEnArchivo(const char* pDestino) {
+    if (pDestino == nullptr) {
         return;
     }
 
-    std::ofstream file;
-    file.open(path, std::ios::out | std::ios::app);  // Modo de apertura
+    std::ofstream archivo;
+    archivo.open(pDestino, std::ios::out | std::ios::app);  // Modo de apertura
 
-    if (file.is_open()) {
-        file << cadena;
-        file.close();
+    if (archivo.is_open()) {
+        archivo << gpCadena;
+        archivo.close();
     } else {
-        std::cerr << "No se pudo abrir el archivo: " << path << std::endl;
+        std::cerr << "No se pudo abrir el archivo: " << pDestino << std::endl;
     }
 }
 
@@ -591,21 +600,21 @@ void String::guardarEnArchivo(const char* path, const char* mode) {
  * 
  **************************************************/
 
-void String::leerArchivo(const char* path) {
-    if (path == nullptr) {
+void String::leerArchivo(const char* pDestino) {
+    if (pDestino == nullptr) {
         return;
     }
 
-    std::ifstream file;
-    file.open(path);  // Modo de apertura por defecto es std::ios::in
+    std::ifstream archivo;
+    archivo.open(pDestino);  // Modo de apertura por defecto es std::ios::in
 
-    if (file.is_open()) {
-        std::string content((std::istreambuf_iterator<char>(file)),
+    if (archivo.is_open()) {
+        std::string content((std::istreambuf_iterator<char>(archivo)),
                             std::istreambuf_iterator<char>());
         cambiarCadena(content.c_str());
-        file.close();
+        archivo.close();
     } else {
-        std::cerr << "No se pudo abrir el archivo: " << path << std::endl;
+        std::cerr << "No se pudo abrir el archivo: " << pDestino << std::endl;
     }
 }
 
@@ -650,7 +659,7 @@ int main() {
     std::cout << "Resultado final: " << miString.obtenerCadena() << std::endl;
 
     // Guardar el contenido del String en un archivo
-    miString.guardarEnArchivo("x.txt", "w");
+    miString.guardarEnArchivo("x.txt");
 
     std::cout << "Contenido guardado en archivo." << std::endl;
 
