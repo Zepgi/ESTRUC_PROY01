@@ -26,7 +26,7 @@ int main() {
 
     miString.reemplazarOcurrencias("soy", "era");
 
-    miString.reemplazarEn(", mírame", 35);
+    miString.reemplazarEn(", mírame", 37);
 
     miString.concatenar("SIIIIII");
 
@@ -35,7 +35,7 @@ int main() {
 
     miString.split('a');
 
-    miString.concatenarEn("yolo", 1);
+    miString.concatenarEn("yolo", 70);
 
     // Imprimir el resultado final
     std::cout << "Resultado final: " << miString.obtenerCadena() << std::endl;
