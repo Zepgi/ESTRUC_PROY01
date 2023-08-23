@@ -56,7 +56,7 @@ String::~String() {
 
 char String::caracterEn(int indice) {
     if (indice < 0 || indice >= len())
-        return '\0';  // Retorna el caracter nulo para índices inválidos
+        return '\0';
     return gpCadena[indice];
 }
 
@@ -130,7 +130,7 @@ void String::cambiarCadena(const char *pNuevaCadena) {
     while (pNuevaCadena[aNewLargo] != '\0')
         aNewLargo++;
 
-    char *aNewCadena = new char[aNewLargo + 1];  // +1 para el carácter nulo
+    char *aNewCadena = new char[aNewLargo + 1];
     for (int i = 0; i < aNewLargo; i++)
         aNewCadena[i] = pNuevaCadena[i];
     aNewCadena[aNewLargo] = '\0';
@@ -229,12 +229,12 @@ String** String::split(char caracterDelimitador) {
             aContador++;
     }
 
-    String** apListaSplit = new String*[aContador + 1];  // +1 para el puntero nulo al final
+    String** apListaSplit = new String*[aContador + 1];
 
     int aIndiceInicio = 0;
     int aIndiceLista = 0;
     std::cout << "Lista de segmentos:" << std::endl;
-    for (int i = 0; i <= len(); i++) {  // <= aquí para procesar el último segmento
+    for (int i = 0; i <= len(); i++) {
         if (i == len() || gpCadena[i] == caracterDelimitador) {
             int aSplitLen = i - aIndiceInicio;
             char *apSplit = new char[aSplitLen + 1];
@@ -250,15 +250,9 @@ String** String::split(char caracterDelimitador) {
         }
     }
 
-    apListaSplit[aContador] = nullptr;  // Agregamos el puntero nulo al final
+    apListaSplit[aContador] = nullptr;
 
-    // Liberar memoria de los objetos String y el arreglo de punteros
-    for (int i = 0; apListaSplit[i] != nullptr; i++) {
-        delete apListaSplit[i];
-    }
-    delete[] apListaSplit; //Libera la memoria
-
-    return nullptr;  // Returna null de ser necesario
+    return apListaSplit;
 }
 
 /*****Nombre***************************************
@@ -281,6 +275,10 @@ void String::concatenarEn(const char *pString, int indice) {
         return;
     }
 
+    if (indice > len()) {
+        indice %= len();
+    }
+    
     int aStringLen = 0;
     while (pString[aStringLen] != '\0') {
         aStringLen++;
@@ -289,28 +287,25 @@ void String::concatenarEn(const char *pString, int indice) {
     int aNewLen = len() + aStringLen;
 
     if (indice > len()) {
-        indice = len();  // Ajustamos el índice si es mayor que la longitud actual
+        indice = len();
     }
 
-    char *apNewCadena = new char[aNewLen + 1];  // +1 para el carácter nulo
+    char *apNewCadena = new char[aNewLen + 1];
 
-    int i = 0;  // Índice para newData
-    int j = 0;  // Índice para data (cadena original)
+    int i = 0;
+    int j = 0;
 
-    // Copiamos los caracteres antes del índice deseado
     while (i < indice) {
         apNewCadena[i] = gpCadena[j];
         i++;
         j++;
     }
 
-    // Copiamos la cadena a insertar
     for (int k = 0; k < aStringLen; k++) {
         apNewCadena[i] = pString[k];
         i++;
     }
 
-    // Continuamos copiando los caracteres restantes de la cadena original
     while (j < len()) {
         apNewCadena[i] = gpCadena[j];
         i++;
@@ -340,18 +335,18 @@ void String::concatenarEn(const char *pString, int indice) {
 void String::concatenar(const char *pCadenaNueva) {
     if (pCadenaNueva == nullptr) {
         return;
-    }//fin if (pCadena == nullptr)
+    }
 
     int aLargoOriginal = 0;
     int aLargoNueva = 0;
 
     while (gpCadena[aLargoOriginal] != '\0') {
         aLargoOriginal++;
-    }//fin while(cadena[larho_original] != '\0')
+    }
 
     while (pCadenaNueva[aLargoNueva] != '\0') {
         aLargoNueva++;
-    }//fin while(pCadena[largo_nueva] != '\0')
+    }
 
     int aNuevoLargo = aLargoOriginal + aLargoNueva;
 
@@ -361,9 +356,9 @@ void String::concatenar(const char *pCadenaNueva) {
             apCadenaResultante[i] = gpCadena[i];
         } else {
             apCadenaResultante[i] = pCadenaNueva[i- aLargoOriginal];
-        }//if (i < largo_original)
+        }
 
-    }// fin for (int i = 0; i < nuevo_largo; i++)
+    }
     apCadenaResultante[aNuevoLargo] = '\0';
 
     delete[] gpCadena;
@@ -396,7 +391,7 @@ void String::concatenarCadenas(const char *pNuevaCadena[]) {
 
     while (gpCadena[aLargoOriginal] != '\0') {
         aLargoOriginal++;
-    }//fin while (cadena[largo_original] != '\0')
+    }
     
     aLargoCadena = aLargoCadena + aLargoOriginal;
 
@@ -407,11 +402,11 @@ void String::concatenarCadenas(const char *pNuevaCadena[]) {
         int aLargoPalabra = 0;
         while (apPalabra[aLargoPalabra] != '\0') {
             aLargoPalabra++;
-        }//fin while (pPalabra[largo_palabra] != '\0')
+        }
 
         aLargoCadena= aLargoCadena + aLargoPalabra;
 
-    }//fin for (int i = 0; i < cantidad_cadenas; i++)
+    }
 
     char *apCadenaResultante = new char[aLargoCadena + 1];
 
@@ -459,6 +454,10 @@ void String::concatenarCadenas(const char *pNuevaCadena[]) {
 void String::reemplazarEn(const char *pReemplazo, int indice) {
     if (pReemplazo == nullptr || indice < 0)
         return;
+
+    if (indice > len()) {
+        indice %= len();
+    }
 
     int aReemplazoLen = 0;
     while (pReemplazo[aReemplazoLen] != '\0')
@@ -513,7 +512,6 @@ void String::reemplazarOcurrencias(const char *pOcurrencia, const char *pNewText
 
     int aNewCadenaLen = len();
 
-    // Calcular la cantidad de veces que ocurre pOcurrencia en cadena
     int aContador = 0;
     for (int i = 0; i < len(); i++) {
         bool aCoincide = true;
@@ -531,7 +529,7 @@ void String::reemplazarOcurrencias(const char *pOcurrencia, const char *pNewText
 
     aNewCadenaLen += (aNewTextoLen - aOcurrenciaLen) * aContador;
 
-    char *apNewCadena = new char[aNewCadenaLen + 1];  // +1 para el carácter nulo
+    char *apNewCadena = new char[aNewCadenaLen + 1];
 
     int i = 0;  // Índice para newCadena
     int j = 0;  // Índice para cadena
@@ -576,7 +574,7 @@ void String::guardarEnArchivo(const char *pDestino) {
     }
 
     std::ofstream archivo;
-    archivo.open(pDestino, std::ios::out | std::ios::app);  // Modo de apertura
+    archivo.open(pDestino, std::ios::out | std::ios::app);
 
     if (archivo.is_open()) {
         archivo << gpCadena;
@@ -606,7 +604,7 @@ void String::leerArchivo(const char *pDestino) {
     }
 
     std::ifstream archivo;
-    archivo.open(pDestino);  // Modo de apertura por defecto es std::ios::in
+    archivo.open(pDestino);
 
     if (archivo.is_open()) {
         std::string content((std::istreambuf_iterator<char>(archivo)),
