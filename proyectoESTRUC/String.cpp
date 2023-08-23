@@ -568,7 +568,7 @@ void String::reemplazarOcurrencias(const char *pOcurrencia, const char *pNewText
  * pModo: Modo de guardado del char* en el archivo. Recibirá solo dos valores, app o out.
  **************************************************/
 
-void String::guardarEnArchivo(char* pRuta, char* pModo) {
+void String::guardarEnArchivo(const char* pRuta,const char* pModo) {
     if (pRuta == nullptr || pModo == nullptr) {
         return;
     }
@@ -605,7 +605,7 @@ void String::guardarEnArchivo(char* pRuta, char* pModo) {
  * 
  **************************************************/
 
-void String::leerArchivo(char *pRuta) {
+void String::leerArchivo(const char *pRuta) {
     if (pRuta == nullptr) {
         return;
     }
