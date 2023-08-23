@@ -130,7 +130,7 @@ void String::cambiarCadena(const char *pNuevaCadena) {
     while (pNuevaCadena[aNewLargo] != '\0')
         aNewLargo++;
 
-    char* aNewCadena = new char[aNewLargo + 1];  // +1 para el carácter nulo
+    char *aNewCadena = new char[aNewLargo + 1];  // +1 para el carácter nulo
     for (int i = 0; i < aNewLargo; i++)
         aNewCadena[i] = pNuevaCadena[i];
     aNewCadena[aNewLargo] = '\0';
@@ -149,7 +149,7 @@ void String::cambiarCadena(const char *pNuevaCadena) {
  *****Entradas*************************************
  * No hay entradas
  **************************************************/
-const char* String::obtenerCadena() const {
+const char *String::obtenerCadena() const {
     return gpCadena;
 }
 
@@ -237,7 +237,7 @@ String** String::split(char caracterDelimitador) {
     for (int i = 0; i <= len(); i++) {  // <= aquí para procesar el último segmento
         if (i == len() || gpCadena[i] == caracterDelimitador) {
             int aSplitLen = i - aIndiceInicio;
-            char* apSplit = new char[aSplitLen + 1];
+            char *apSplit = new char[aSplitLen + 1];
             for (int j = 0; j < aSplitLen; j++) {
                 apSplit[j] = gpCadena[aIndiceInicio + j];
             }
@@ -276,7 +276,7 @@ String** String::split(char caracterDelimitador) {
  * 
  **************************************************/
 
-void String::concatenarEn(const char* pString, int indice) {
+void String::concatenarEn(const char *pString, int indice) {
     if (pString == nullptr || indice < 0) {
         return;
     }
@@ -292,7 +292,7 @@ void String::concatenarEn(const char* pString, int indice) {
         indice = len();  // Ajustamos el índice si es mayor que la longitud actual
     }
 
-    char* apNewCadena = new char[aNewLen + 1];  // +1 para el carácter nulo
+    char *apNewCadena = new char[aNewLen + 1];  // +1 para el carácter nulo
 
     int i = 0;  // Índice para newData
     int j = 0;  // Índice para data (cadena original)
@@ -355,7 +355,7 @@ void String::concatenar(const char *pCadenaNueva) {
 
     int aNuevoLargo = aLargoOriginal + aLargoNueva;
 
-    char* apCadenaResultante = new char[aNuevoLargo + 1];
+    char *apCadenaResultante = new char[aNuevoLargo + 1];
     for (int i = 0; i < aNuevoLargo; i++) {
         if (i < aLargoOriginal) {
             apCadenaResultante[i] = gpCadena[i];
@@ -456,7 +456,7 @@ void String::concatenarCadenas(const char *pNuevaCadena[]) {
  * 
  **************************************************/
 
-void String::reemplazarEn(const char* pReemplazo, int indice) {
+void String::reemplazarEn(const char *pReemplazo, int indice) {
     if (pReemplazo == nullptr || indice < 0)
         return;
 
@@ -466,7 +466,7 @@ void String::reemplazarEn(const char* pReemplazo, int indice) {
 
     int aNewLen = len() + aReemplazoLen - 1;
 
-    char* apNewCadena = new char[aNewLen + 1];  
+    char *apNewCadena = new char[aNewLen + 1];  
 
     int i = 0;
     int j = 0;
@@ -499,7 +499,7 @@ void String::reemplazarEn(const char* pReemplazo, int indice) {
  * 
  **************************************************/
 
-void String::reemplazarOcurrencias(const char* pOcurrencia, const char* pNewTexto) {
+void String::reemplazarOcurrencias(const char *pOcurrencia, const char *pNewTexto) {
     if (pOcurrencia == nullptr || pNewTexto == nullptr)
         return;
 
@@ -531,7 +531,7 @@ void String::reemplazarOcurrencias(const char* pOcurrencia, const char* pNewText
 
     aNewCadenaLen += (aNewTextoLen - aOcurrenciaLen) * aContador;
 
-    char* apNewCadena = new char[aNewCadenaLen + 1];  // +1 para el carácter nulo
+    char *apNewCadena = new char[aNewCadenaLen + 1];  // +1 para el carácter nulo
 
     int i = 0;  // Índice para newCadena
     int j = 0;  // Índice para cadena
@@ -570,7 +570,7 @@ void String::reemplazarOcurrencias(const char* pOcurrencia, const char* pNewText
  * 
  **************************************************/
 
-void String::guardarEnArchivo(const char* pDestino) {
+void String::guardarEnArchivo(const char *pDestino) {
     if (pDestino == nullptr) {
         return;
     }
@@ -600,7 +600,7 @@ void String::guardarEnArchivo(const char* pDestino) {
  * 
  **************************************************/
 
-void String::leerArchivo(const char* pDestino) {
+void String::leerArchivo(const char *pDestino) {
     if (pDestino == nullptr) {
         return;
     }
@@ -617,3 +617,5 @@ void String::leerArchivo(const char* pDestino) {
         std::cerr << "No se pudo abrir el archivo: " << pDestino << std::endl;
     }
 }
+
+
