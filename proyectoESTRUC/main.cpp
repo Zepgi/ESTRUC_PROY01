@@ -41,7 +41,7 @@ int main() {
     std::cout << "Resultado final: " << miString.obtenerCadena() << std::endl;
 
     // Guardar el contenido del String en un archivo
-    miString.guardarEnArchivo("x.txt");
+    miString.guardarEnArchivo("x.txt", "out");
 
     std::cout << "Contenido guardado en archivo." << std::endl;
 
