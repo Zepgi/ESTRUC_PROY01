@@ -41,8 +41,8 @@ public:
     void concatenarCadenas(const char *pNuevaCadena[]);
     void reemplazarEn(const char *pReemplazo, int indice);
     void reemplazarOcurrencias(const char *pOcurrencia, const char *pReemplazo);
-    void guardarEnArchivo(const char *pDireccion);
-    void leerArchivo(const char *pDirección);
+    void guardarEnArchivo(const char *pRuta,const char *pModo);
+    void leerArchivo(const char *pRuta);
 };
 
 #endif
