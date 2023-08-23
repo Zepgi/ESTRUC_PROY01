@@ -278,7 +278,7 @@ void String::concatenarEn(const char *pString, int indice) {
     if (indice > len()) {
         indice %= len();
     }
-    
+
     int aStringLen = 0;
     while (pString[aStringLen] != '\0') {
         aStringLen++;
@@ -565,22 +565,29 @@ void String::reemplazarOcurrencias(const char *pOcurrencia, const char *pNewText
  * 
  *****Entradas*************************************
  * pDestino: Puntero a una cadena de caracteres que representa la ruta del archivo en el cual se guardará el contenido.
- * 
+ * pModo: Modo de guardado del char* en el archivo. Recibirá solo dos valores, app o out.
  **************************************************/
 
-void String::guardarEnArchivo(const char *pDestino) {
-    if (pDestino == nullptr) {
+void String::guardarEnArchivo(char* pRuta, char* pModo) {
+    if (pRuta == nullptr || pModo == nullptr) {
         return;
     }
 
     std::ofstream archivo;
-    archivo.open(pDestino, std::ios::out | std::ios::app);
+    if (std::string(pModo) == "out") {
+        archivo.open(pRuta, std::ios::out);
+    } else if (std::string(pModo) == "app") {
+        archivo.open(pRuta, std::ios::out | std::ios::app);
+    } else {
+        std::cerr << "Modo de apertura no válido: " << pModo << std::endl;
+        return;
+    }
 
     if (archivo.is_open()) {
         archivo << gpCadena;
         archivo.close();
     } else {
-        std::cerr << "No se pudo abrir el archivo: " << pDestino << std::endl;
+        std::cerr << "No se pudo abrir el archivo: " << pRuta << std::endl;
     }
 }
 
@@ -598,13 +605,13 @@ void String::guardarEnArchivo(const char *pDestino) {
  * 
  **************************************************/
 
-void String::leerArchivo(const char *pDestino) {
-    if (pDestino == nullptr) {
+void String::leerArchivo(char *pRuta) {
+    if (pRuta == nullptr) {
         return;
     }
 
     std::ifstream archivo;
-    archivo.open(pDestino);
+    archivo.open(pRuta);
 
     if (archivo.is_open()) {
         std::string content((std::istreambuf_iterator<char>(archivo)),
@@ -612,8 +619,7 @@ void String::leerArchivo(const char *pDestino) {
         cambiarCadena(content.c_str());
         archivo.close();
     } else {
-        std::cerr << "No se pudo abrir el archivo: " << pDestino << std::endl;
+        std::cerr << "No se pudo abrir el archivo: " << pRuta << std::endl;
     }
 }
-
 
